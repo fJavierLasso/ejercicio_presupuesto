@@ -11,5 +11,26 @@ class Movimiento {
         $this->descripcion = $descripcion;
         $this->valor = $valor;
     }
+
+    // getters y setters
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getTipo() {
+        return $this->tipo;
+    }
+
+    public function getDescripcion() {
+        return $this->descripcion;
+    }
+
+    public function getValor() {
+        return $this->valor;
+    }
+    
+
+
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 include_once "config/BaseDatos.php";
-include_once "Movimiento.php";
+include_once "Ingreso.php";
+include_once "Gasto.php";
 
 class Presupuesto {
     private $movimientos = [];
@@ -10,7 +11,11 @@ class Presupuesto {
         $resultados = $bd->sentencia("SELECT * FROM movimientos");
 
         foreach ($resultados as $fila) {
-            $this->movimientos[] = new Movimiento($fila["id"], $fila["tipo"], $fila["descripcion"], $fila["valor"]);
+            if ($fila["tipo"] === "ingreso") {
+                $this->movimientos[] = new Ingreso($fila["id"], $fila["descripcion"], $fila["valor"]);
+            } else {
+                $this->movimientos[] = new Gasto($fila["id"], $fila["descripcion"], $fila["valor"]);
+            }
         }
     }
 

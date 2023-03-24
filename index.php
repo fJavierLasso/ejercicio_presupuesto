@@ -5,16 +5,6 @@ include_once "classes/Presupuesto.php";
 $bd = BaseDatos::getInstance();
 $presupuesto = new Presupuesto();
 
-$movimientos = $presupuesto->getMovimientos();
-$totalIngresos = $presupuesto->getTotalIngresos();
-$totalGastos = $presupuesto->getTotalGastos();
-
-$porcentajeGastos = $presupuesto->getPorcentajeGastos();
-$restante = $presupuesto->getPresupuestoRestante();
-
-$gastos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'gasto'");
-$ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
-
 ?>
 
 <!DOCTYPE html>
@@ -37,19 +27,19 @@ $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
             <div class="presupuesto_titulo">
                 Presupuesto Disponible
             </div>
-            <div class="presupuesto_valor" id='presupuesto'><?php echo $restante; ?>€</div>
+            <div class="presupuesto_valor" id='presupuesto'><?php echo $presupuesto->getPresupuestoRestante(); ?>€</div>
             <div class="presupuesto_ingreso limpiarEstilos">
                 <div class="presupuesto_ingreso--texto">Ingresos</div>
                 <div class="derecha">
-                    <div class="presupuesto_ingreso--valor" id='ingresos'><?php echo $totalIngresos; ?>€</div>
+                    <div class="presupuesto_ingreso--valor" id='ingresos'><?php echo $presupuesto->getTotalIngresos(); ?>€</div>
                     <div class="presupuesto_ingreso--porcentaje">&nbsp;</div>
                 </div>
             </div>
             <div class="presupuesto_egreso limpiarEstilos">
                 <div class="presupuesto_egreso--texto">Gastos</div>
                 <div class="derecha limpiarEstilos">
-                    <div class="presupuesto_egreso--valor" id='egresos'>- <?php echo $totalGastos ?>€</div>
-                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'><?php echo round($porcentajeGastos,2) ?>%</div>
+                    <div class="presupuesto_egreso--valor" id='egresos'>- <?php echo $presupuesto->getTotalGastos(); ?>€</div>
+                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'><?php echo round($presupuesto->getPorcentajeGastos(),2) ?>%</div>
                 </div>
             </div>
         </div>
@@ -73,21 +63,19 @@ $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
         </div>
     </form>
 
-
     <!-- lista de ingresos -->
     <div class="contenedor limpiarEstilos">
         <div class="columna-ingresos">
-            <h2 class='ingreso_titulo'>Ingresos</h2>
-            <hr>
+            <h2 class='ingreso_titulo'>Ingresos</h2><hr>
             <?php
-            foreach ($ingresos as $movimiento) {
+            foreach ($presupuesto->getIngresos() as $ingreso) {
             ?>
                     <div class="elemento limpiarEstilos">
-                        <div class="elemento_descripcion"><?php echo $movimiento['descripcion']; ?></div>
+                        <div class="elemento_descripcion"><?php echo $ingreso->getDescripcion(); ?></div>
                         <div class="derecha limpiarEstilos">
-                            <div class="elemento_valor"><?php echo $movimiento['valor']; ?>€</div>
+                            <div class="elemento_valor"><?php echo $ingreso->getValor() ?>€</div>
                             <div class="elemento_eliminar">
-                            <button class='elemento_eliminar--btn' data-id="<?php echo $movimiento['id']; ?>">
+                            <button class='elemento_eliminar--btn' data-id="<?php echo $ingreso->getId(); ?>">
                             <img class="eliminar" src="imgs/delete.png" alt="">
                             </button>
                             </div>
@@ -100,18 +88,17 @@ $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
             
         <!-- lista de gastos -->
         <div class="columna-gastos">
-            <h2 class='egreso_titulo'>Gastos</h2>
-            <hr>
+            <h2 class='egreso_titulo'>Gastos</h2><hr>
             <?php
-            foreach ($gastos as $movimiento) {
+            foreach ($presupuesto->getGastos() as $gasto) {
             ?>
                     <div class="elemento limpiarEstilos">
-                        <div class="elemento_descripcion"><?php echo $movimiento['descripcion']; ?></div>
+                        <div class="elemento_descripcion"><?php echo $gasto->getDescripcion(); ?></div>
                         <div class="derecha limpiarEstilos">
-                            <div class="elemento_valor"><?php echo $movimiento['valor']; ?>€</div>
-                            <div class="elemento_porcentaje"><?php echo round($movimiento['valor']/$totalIngresos*100,2) ?>%</div>
+                            <div class="elemento_valor"><?php echo $gasto->getValor(); ?>€</div>
+                            <div class="elemento_porcentaje"><?php echo $gasto->getPorcentaje($presupuesto->getTotalIngresos()) ?>%</div>
                             <div class="elemento_eliminar">
-                            <button class='elemento_eliminar--btn' data-id="<?php echo $movimiento['id']; ?>">
+                            <button class='elemento_eliminar--btn' data-id="<?php echo $gasto->getId(); ?>">
                             <img class="eliminar" src="imgs/delete.png" alt="">
                             </button>
                             </div>
@@ -120,7 +107,6 @@ $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
             <?php
             }
             ?>
-            
         </div>
     </div>
 </body>
