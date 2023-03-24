@@ -1,5 +1,5 @@
 <?php
-include_once "../config/BaseDatos.php";
+include_once "../classes/BaseDatos.php";
 
 if (isset($_POST["id"])) {
   $id = $_POST["id"];

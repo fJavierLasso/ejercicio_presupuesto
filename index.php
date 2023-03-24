@@ -1,5 +1,5 @@
 <?php
-include_once "config/BaseDatos.php";
+include_once "classes/BaseDatos.php";
 include_once "classes/Presupuesto.php";
 
 $bd = BaseDatos::getInstance();

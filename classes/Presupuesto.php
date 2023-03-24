@@ -1,7 +1,7 @@
 <?php
-include_once "config/BaseDatos.php";
-include_once "Ingreso.php";
-include_once "Gasto.php";
+include_once "BaseDatos.php";
+include_once "movimientos/Ingreso.php";
+include_once "movimientos/Gasto.php";
 
 class Presupuesto {
     private $movimientos = [];
@@ -13,8 +13,10 @@ class Presupuesto {
         foreach ($resultados as $fila) {
             if ($fila["tipo"] === "ingreso") {
                 $this->movimientos[] = new Ingreso($fila["id"], $fila["descripcion"], $fila["valor"]);
-            } else {
+            } else if ($fila["tipo"] === "gasto") {
                 $this->movimientos[] = new Gasto($fila["id"], $fila["descripcion"], $fila["valor"]);
+            } else {
+                throw new Exception("Tipo de movimiento desconocido");
             }
         }
     }

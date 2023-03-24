@@ -29,8 +29,5 @@ class Movimiento {
     public function getValor() {
         return $this->valor;
     }
-    
-
-
 }
 ?>

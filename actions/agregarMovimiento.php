@@ -1,5 +1,5 @@
 <?php
-include_once "../config/BaseDatos.php";
+include_once "../classes/BaseDatos.php";
 
 $bd = BaseDatos::getInstance();
 
@@ -9,6 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : '';
     $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
     $valor = isset($_POST['valor']) ? (float)$_POST['valor'] : 0;
+
+    //Si el valor tiene , lo cambia por . (para que sea válido)
+    $valor = str_replace(",", ".", $valor);
 
     // Validación básica
     if (!empty($tipo) && !empty($descripcion) && $valor > 0) {
