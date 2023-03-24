@@ -1,15 +1,16 @@
 <?php
 include_once "config/BaseDatos.php";
+include_once "classes/Presupuesto.php";
 
 $bd = BaseDatos::getInstance();
+$presupuesto = new Presupuesto();
 
-$movimientos = $bd->sentencia("SELECT * FROM movimientos");
-$totalIngresos = $bd->sentencia("SELECT SUM(valor) FROM movimientos WHERE tipo = 'ingreso'")->fetchColumn();
-$totalGastos = $bd->sentencia("SELECT SUM(valor) FROM movimientos WHERE tipo = 'gasto'")->fetchColumn();
+$movimientos = $presupuesto->getMovimientos();
+$totalIngresos = $presupuesto->getTotalIngresos();
+$totalGastos = $presupuesto->getTotalGastos();
 
-//para evitar división entre 0
-$porcentajeGastos= $totalIngresos>0 ? round($totalGastos/$totalIngresos *100,0) : 0;
-$presupuesto = $totalIngresos - $totalGastos;
+$porcentajeGastos = $presupuesto->getPorcentajeGastos();
+$restante = $presupuesto->getPresupuestoRestante();
 
 $gastos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'gasto'");
 $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
@@ -36,7 +37,7 @@ $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
             <div class="presupuesto_titulo">
                 Presupuesto Disponible
             </div>
-            <div class="presupuesto_valor" id='presupuesto'><?php echo $presupuesto; ?>€</div>
+            <div class="presupuesto_valor" id='presupuesto'><?php echo $restante; ?>€</div>
             <div class="presupuesto_ingreso limpiarEstilos">
                 <div class="presupuesto_ingreso--texto">Ingresos</div>
                 <div class="derecha">
@@ -48,7 +49,7 @@ $ingresos = $bd->sentencia("SELECT * FROM movimientos WHERE tipo = 'ingreso'");
                 <div class="presupuesto_egreso--texto">Gastos</div>
                 <div class="derecha limpiarEstilos">
                     <div class="presupuesto_egreso--valor" id='egresos'>- <?php echo $totalGastos ?>€</div>
-                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'><?php echo $porcentajeGastos ?>%</div>
+                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'><?php echo round($porcentajeGastos,2) ?>%</div>
                 </div>
             </div>
         </div>
