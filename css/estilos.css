@@ -27,6 +27,16 @@ body {
     font-weight: 400;
 }
 
+.error {
+    margin: 0 auto;
+    padding: 20px;
+    color: white;
+    background-color: #FF5049;
+    width: 50%;
+    text-align: center;
+    margin-top: 5px;
+}
+
 .columna-ingresos,
 .columna-gastos {
     width: 50%;

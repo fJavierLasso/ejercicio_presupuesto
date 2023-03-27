@@ -2,6 +2,8 @@
 include_once "classes/BaseDatos.php";
 include_once "classes/Presupuesto.php";
 
+session_start();
+
 $bd = BaseDatos::getInstance();
 $presupuesto = new Presupuesto();
 
@@ -39,7 +41,7 @@ $presupuesto = new Presupuesto();
                 <div class="presupuesto_egreso--texto">Gastos</div>
                 <div class="derecha limpiarEstilos">
                     <div class="presupuesto_egreso--valor" id='egresos'>- <?php echo $presupuesto->getTotalGastos(); ?>€</div>
-                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'><?php echo round($presupuesto->getPorcentajeGastos(),2) ?>%</div>
+                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'><?php echo round($presupuesto->getPorcentajeGastos(), 2) ?>%</div>
                 </div>
             </div>
         </div>
@@ -57,53 +59,64 @@ $presupuesto = new Presupuesto();
                 <input type='text' class='agregar_descripcion' placeholder="Agregar Descripción" id='descripcion' name="descripcion" />
                 <input type='number' class='agregar_valor' placeholder="Valor" id='valor' step='any' name="valor" />
                 <button type="submit" class='agregar_btn'">
-                <img class="crear" src="imgs/checkmark.png" alt="">
+                <img class=" crear" src="imgs/checkmark.png" alt="">
                 </button>
             </div>
         </div>
     </form>
 
+    <!-- Mostrar el mensaje de error si existe -->
+    <?php
+    if (isset($_SESSION['error'])) {
+        echo "<p class='error'>{$_SESSION['error']}</p>";
+        // Eliminar el mensaje de error de la sesión
+        unset($_SESSION['error']);
+    }
+    ?>
+
     <!-- lista de ingresos -->
     <div class="contenedor limpiarEstilos">
         <div class="columna-ingresos">
-            <h2 class='ingreso_titulo'>Ingresos</h2><hr>
+            <h2 class='ingreso_titulo'>Ingresos</h2>
+            <hr>
             <?php
             foreach ($presupuesto->getIngresos() as $ingreso) {
             ?>
-                    <div class="elemento limpiarEstilos">
-                        <div class="elemento_descripcion"><?php echo $ingreso->getDescripcion(); ?></div>
-                        <div class="derecha limpiarEstilos">
-                            <div class="elemento_valor"><?php echo $ingreso->getValor() ?>€</div>
-                            <div class="elemento_eliminar">
+                <div class="elemento limpiarEstilos">
+                    <div class="elemento_descripcion"><?php echo $ingreso->getDescripcion(); ?></div>
+                    <div class="derecha limpiarEstilos">
+                        <div class="elemento_valor"><?php echo $ingreso->getValor() ?>€</div>
+                        <div class="elemento_eliminar">
                             <button class='elemento_eliminar--btn' data-id="<?php echo $ingreso->getId(); ?>">
-                            <img class="eliminar" src="imgs/delete.png" alt="">
+                                <img class="eliminar" src="imgs/delete.png" alt="">
                             </button>
-                            </div>
                         </div>
                     </div>
+                </div>
             <?php
             }
             ?>
         </div>
-            
+
         <!-- lista de gastos -->
         <div class="columna-gastos">
-            <h2 class='egreso_titulo'>Gastos</h2><hr>
+            <h2 class='egreso_titulo'>Gastos</h2>
+            <hr>
             <?php
             foreach ($presupuesto->getGastos() as $gasto) {
             ?>
-                    <div class="elemento limpiarEstilos">
-                        <div class="elemento_descripcion"><?php echo $gasto->getDescripcion(); ?></div>
-                        <div class="derecha limpiarEstilos">
-                            <div class="elemento_valor"><?php echo $gasto->getValor(); ?>€</div>
-                            <div class="elemento_porcentaje"><?php echo $gasto->getPorcentaje($presupuesto->getTotalIngresos()) ?>%</div>
-                            <div class="elemento_eliminar">
+                <div class="elemento limpiarEstilos">
+                    <div class="elemento_descripcion"><?php echo $gasto->getDescripcion(); ?></div>
+                    <div class="derecha limpiarEstilos">
+                        <div class="elemento_valor"><?php echo $gasto->getValor(); ?>€</div>
+                        <div class="elemento_porcentaje"><?php echo $gasto->getPorcentaje($presupuesto->getTotalIngresos()) ?>%</div>
+                        <div class="elemento_eliminar">
                             <button class='elemento_eliminar--btn' data-id="<?php echo $gasto->getId(); ?>">
-                            <img class="eliminar" src="imgs/delete.png" alt="">
+                                <img class="eliminar" src="imgs/delete.png" alt="">
                             </button>
-                            </div>
                         </div>
                     </div>
+                </div>
             <?php
             }
             ?>
