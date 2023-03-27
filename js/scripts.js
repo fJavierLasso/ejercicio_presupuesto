@@ -1,4 +1,4 @@
-
+//Logica para eliminar movimientos
 document.addEventListener("DOMContentLoaded", function () {
     const eliminarBtns = document.querySelectorAll(".elemento_eliminar--btn");
   
@@ -25,4 +25,35 @@ function eliminarMovimiento(id) {
   
     xhr.send("id=" + id);
   }
+
+  // Logica ajax para eliminar movimientos. Ahora con jquery :-)
+  $('#forma').on('submit', function(event) {
+    event.preventDefault(); // Evita que el formulario se envíe de la manera predeterminada
+
+    let tipo = $('#tipo').val();
+    let descripcion = $('#descripcion').val();
+    let valor = $('#valor').val();
+
+    // Realizar la validación en el lado del cliente aquí si es necesario
+
+    $.ajax({
+        type: "POST",
+        url: "actions/agregarMovimiento.php",
+        data: {
+            tipo: tipo,
+            descripcion: descripcion,
+            valor: valor
+        },
+        success: function(response) {
+            // Si la respuesta es "success", recarga la página o actualiza los datos necesarios
+            if (response.trim() === "success") {
+                location.reload();
+            } else {
+                // Si la respuesta no es "success", muestra el mensaje de error
+                $('.error').remove();
+                $('#forma').before('<p class="error">' + response + '</p>');
+            }
+        }
+    });
+});
   

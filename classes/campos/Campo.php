@@ -6,7 +6,7 @@ abstract class Campo {
     protected $name;
     protected $titulo;
 
-    public function __construct($clase, $placeholder, $id, $name, $titulo) {
+    public function __construct($clase="text", $placeholder="", $id="", $name="", $titulo="") {
         $this->clase = $clase;
         $this->placeholder = $placeholder;
         $this->id = $id;

@@ -7,8 +7,8 @@ session_start(); // Inicia la sesión para almacenar el mensaje de error
 
 $bd = BaseDatos::getInstance();
 
-$campoDescripcion = new CampoTexto('', '', '', '', '');
-$campoValor = new CampoNumerico('', '', '', '', '');
+$campoDescripcion = new CampoTexto();
+$campoValor = new CampoNumerico();
 
 // Comprueba si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -23,15 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($tipo) && $campoDescripcion->validarDato($descripcion) && $campoValor->validarDato($valor) && in_array($tipo, ['ingreso', 'gasto'])) {
         $bd = BaseDatos::getInstance();
 
-        // Prepara la consulta para insertar el nuevo movimiento
+        // Si todo es válido, inserto el movimiento
         $resultado = $bd->sentencia("INSERT INTO movimientos (tipo, descripcion, valor) VALUES (?,?,?)", $tipo, $descripcion, $valor);
+        
+        //Cierro conexión con la BD
+        $bd->cerrarBD();
+
         header('Location: ../index.php');
+
     } else {
         $_SESSION['error'] = "Por favor, rellena los campos correctamente";
         header('Location: ../index.php');
     }
 
-    //Cierro conexión
-    $bd->cerrarBD();
+    
 }
 ?>

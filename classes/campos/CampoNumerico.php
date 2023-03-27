@@ -5,7 +5,7 @@ class CampoNumerico extends Campo
 {
     private $step;
 
-    public function __construct($clase, $placeholder, $id, $name, $titulo, $step = 'any')
+    public function __construct($clase="number", $placeholder="", $id="", $name="", $titulo="", $step = 'any')
     {
         parent::__construct($clase, $placeholder, $id, $name, $titulo);
         $this->step = $step;
