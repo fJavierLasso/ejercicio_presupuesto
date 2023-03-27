@@ -16,6 +16,9 @@ $presupuesto = new Presupuesto();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <title>Aplicación Presupuesto</title>
 
     <link href="css/estilos.css" rel='stylesheet' />
@@ -52,13 +55,14 @@ $presupuesto = new Presupuesto();
     <form id='forma' method="POST" action="actions/agregarMovimiento.php">
         <div class="agregar">
             <div class="agregar_contenedor">
-                <select class='agregar_tipo' id='tipo' name="tipo">
-                    <option value='ingreso' selected>+</option>
-                    <option value='gasto'>-</option>
-                </select>
+                <div class="tipo-selector">
+                    <div class='tipo-option selected' data-tipo='ingreso'>+</div>
+                    <div class='tipo-option' data-tipo='gasto'>-</div>
+                    <input type="hidden" id="tipo" name="tipo" value="ingreso" />
+                </div>
                 <input type='text' class='agregar_descripcion' placeholder="Agregar Descripción" id='descripcion' name="descripcion" />
                 <input type='number' class='agregar_valor' placeholder="Valor" id='valor' step='any' name="valor" />
-                <button type="submit" class='agregar_btn'">
+                <button type="submit" class='agregar_btn'>
                 <img class=" crear" src="imgs/checkmark.png" alt="">
                 </button>
             </div>
