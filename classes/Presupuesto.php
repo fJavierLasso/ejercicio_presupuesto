@@ -27,25 +27,25 @@ class Presupuesto {
 
     public function getIngresos() {
         return array_filter($this->movimientos, function($movimiento) {
-            return $movimiento->tipo === "ingreso";
+            return $movimiento->getTipo() === "ingreso";
         });
     }
 
     public function getGastos() {
         return array_filter($this->movimientos, function($movimiento) {
-            return $movimiento->tipo === "gasto";
+            return $movimiento->getTipo() === "gasto";
         });
     }
 
     public function getTotalIngresos() {
         return array_reduce($this->getIngresos(), function($carry, $movimiento) {
-            return $carry + $movimiento->valor;
+            return $carry + $movimiento->getValor();
         }, 0);
     }
 
     public function getTotalGastos() {
         return array_reduce($this->getGastos(), function($carry, $movimiento) {
-            return $carry + $movimiento->valor;
+            return $carry + $movimiento->getValor();
         }, 0);
     }
 

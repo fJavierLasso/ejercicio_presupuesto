@@ -7,7 +7,7 @@ class Gasto extends Movimiento {
     }
 
     public function getPorcentaje($totalIngresos) {
-        return $totalIngresos > 0 ? round($this->valor / $totalIngresos * 100, 2) : 0;
+        return $totalIngresos > 0 ? round($this->getValor() / $totalIngresos * 100, 2) : 0;
     }
 }
 

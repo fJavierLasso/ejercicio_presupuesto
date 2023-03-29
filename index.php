@@ -2,6 +2,11 @@
 include_once "classes/BaseDatos.php";
 include_once "classes/Presupuesto.php";
 
+// Para llamadas a la API
+if (isset($_POST['movimientos'])) {
+    header('Location: actions/api_movimientos.php?solicitud=' . $_POST['movimientos']);
+}
+
 session_start();
 
 $bd = BaseDatos::getInstance();

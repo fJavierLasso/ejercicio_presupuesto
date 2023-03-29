@@ -1,9 +1,9 @@
 <?php
 class Movimiento {
-    public $id;
-    public $tipo;
-    public $descripcion;
-    public $valor;
+    private $id;
+    private $tipo;
+    private $descripcion;
+    private $valor;
 
     public function __construct($id, $tipo, $descripcion, $valor) {
         $this->id = $id;
