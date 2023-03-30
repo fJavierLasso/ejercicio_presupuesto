@@ -5,26 +5,28 @@ document.addEventListener("DOMContentLoaded", function () {
   eliminarBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       e.preventDefault();
-      const id = e.target.closest(".elemento_eliminar--btn").dataset.id;
+      const id = btn.dataset.id;
       eliminarMovimiento(id);
     });
   });
 });
 
 function eliminarMovimiento(id) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "../actions/eliminarMovimiento.php", true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
+  $.ajax({
+    type: "POST",
+    url: "../actions/eliminarMovimiento.php",
+    data: {id: id},
+    dataType: "html",
+    success: function(response) {
       console.log(`Movimiento id ${id} eliminado con éxito`);
       location.reload(); // Recarga la página para mostrar los cambios
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(`Error en la eliminación del movimiento id ${id}: ${textStatus} - ${errorThrown}`);
     }
-  };
-
-  xhr.send("id=" + id);
+  });
 }
+
 
 // Animaciones del selector gasto/ingreso
 $(document).ready(function () {

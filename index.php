@@ -1,11 +1,18 @@
 <?php
 include_once "classes/BaseDatos.php";
 include_once "classes/Presupuesto.php";
+require_once 'classes/Weather.php';
 
 // Para llamadas a la API
 if (isset($_POST['movimientos'])) {
     header('Location: actions/api_movimientos.php?solicitud=' . $_POST['movimientos']);
 }
+
+// Para usar Weather
+$weather = new Weather();
+$city = 'Madrid';
+$current_weather = $weather->getCurrentWeather($city);
+
 
 session_start();
 
@@ -32,6 +39,20 @@ $presupuesto = new Presupuesto();
 </head>
 
 <body>
+
+    <!-- Weather -->
+
+    <div class="weather-container">
+        <?php if ($current_weather !== null): ?>
+            <h3>Tiempo en <?php echo $city; ?></h3>
+            <p>Temperatura: <?php echo $current_weather->current->temperature; ?>°C</p>
+            <p>Actualmente: <?php echo $current_weather->current->weather_descriptions[0]; ?></p>
+        <?php else: ?>
+            <p>Error al obtener información del clima.</p>
+        <?php endif; ?>
+    </div>
+
+    <!-- cabecera -->
     <div class="cabecero">
         <div class="presupuesto">
             <div class="presupuesto_titulo">
@@ -68,17 +89,18 @@ $presupuesto = new Presupuesto();
                 <input type='text' class='agregar_descripcion' placeholder="Agregar Descripción" id='descripcion' name="descripcion" />
                 <input type='number' class='agregar_valor' placeholder="Valor" id='valor' step='any' name="valor" />
                 <button type="submit" class='agregar_btn'>
-                <img class=" crear" src="imgs/checkmark.png" alt="">
+                    <img class=" crear" src="imgs/checkmark.png" alt="">
                 </button>
             </div>
         </div>
     </form>
 
     <!-- Mostrar el mensaje de error si existe -->
+
     <?php
     if (isset($_SESSION['error'])) {
         echo "<p class='error'>{$_SESSION['error']}</p>";
-        // Eliminar el mensaje de error de la sesión
+        // Eliminar el mensaje de error de la sesión (ya se ha mostrado)
         unset($_SESSION['error']);
     }
     ?>
