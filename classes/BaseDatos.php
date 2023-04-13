@@ -4,9 +4,10 @@ class BaseDatos
 {
 
     private static $instance = null;
-    private const DSN = 'mysql:host=localhost;dbname=primeraBase';
-    private const USER = 'fjavierlasso';
-    private const PASSWORD = '1234';
+    
+    private $dsn;
+    private $user;
+    private $password;
 
     private $dbh;
 
@@ -22,10 +23,12 @@ class BaseDatos
     private function __construct()
     {
         try {
+            $this->dsn = 'mysql:host=' . getenv('DB_HOST') . ';dbname=' . getenv('DB_NAME');
+            $this->user = getenv('DB_USER');
+            $this->password = getenv('DB_PASSWORD');
 
-            $this->dbh = new PDO(self::DSN, self::USER, self::PASSWORD); //Abro la conexión
-            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //Manejo de errores
-
+            $this->dbh = new PDO($this->dsn, $this->user, $this->password);
+            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             print "¡Error!: " . $e->getMessage() . "\n";
             die();
