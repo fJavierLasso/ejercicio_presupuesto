@@ -1,9 +1,8 @@
 <?php
+require_once 'config.php';
 
-
-require_once 'classes/BaseDatos.php';
-require_once 'classes/Presupuesto.php';
-require_once 'classes/Weather.php';
+require_once CLASSES_PATH . 'BaseDatos.php';
+require_once CLASSES_PATH . 'Presupuesto.php';
 
 $bd = BaseDatos::getInstance();
 $presupuesto = new Presupuesto($bd);

@@ -1,7 +1,7 @@
 <?php
-
-require_once('classes/BaseDatos.php');
-require_once('classes/Presupuesto.php');
+require_once file_exists('config.php') ? 'config.php' : '../config.php';
+require_once CLASSES_PATH . 'BaseDatos.php';
+require_once CLASSES_PATH . 'Presupuesto.php';
 
 $bd = BaseDatos::getInstance();
 $presupuesto = new Presupuesto($bd);
