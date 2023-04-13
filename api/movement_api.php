@@ -1,16 +1,23 @@
 <?php
-$presupuesto = new Presupuesto();
+
+require_once('classes/BaseDatos.php');
+require_once('classes/Presupuesto.php');
+
 $bd = BaseDatos::getInstance();
+$presupuesto = new Presupuesto($bd);
 
 $ingresos = array_values($presupuesto->getIngresos());
 $gastos = array_values($presupuesto->getGastos($presupuesto->getTotalIngresos()));
 
+// Si no se ha enviado el parámetro request, devuelve un error
 if (!isset($_GET['request'])) {
     echo json_encode(['error' => 'Parámetro no válido']);
     die();
 }
 
 $request = $_GET['request'];
+
+// Si se ha enviado el parámetro request con un id, devuelve el movimiento con ese id
 $requestRecuperada = $bd->sentencia("SELECT * FROM movimientos WHERE id = '$request'")->fetchAll();
 
 header('Content-Type: application/json');

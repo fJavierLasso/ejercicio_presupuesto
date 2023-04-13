@@ -1,5 +1,6 @@
 <?php
-// weather_api.php
+// require_once '../classes/Weather.php';
+require_once 'classes/Weather.php';
 
 $weather = new Weather();
 $city = 'Madrid';

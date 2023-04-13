@@ -1,5 +1,4 @@
 <?php
-include_once "BaseDatos.php";
 include_once "movimientos/Ingreso.php";
 include_once "movimientos/Gasto.php";
 
@@ -7,9 +6,8 @@ class Presupuesto
 {
     private $movimientos = [];
 
-    public function __construct()
+    public function __construct($bd)
     {
-        $bd = BaseDatos::getInstance();
         $resultados = $bd->sentencia("SELECT * FROM movimientos");
 
         foreach ($resultados as $fila) {

@@ -1,6 +1,4 @@
 <?php
-$presupuesto = new Presupuesto();
-
 // Si se ha enviado el formulario...
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Asigno los valores del formulario a variables
@@ -10,5 +8,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Hago el movimiento
     echo $presupuesto->agregarMovimiento($tipo, $descripcion, $valor) ? json_encode(array('success' => true)) : json_encode(array('error' => 'Rellena los campos correctamente.'));
-
 }
