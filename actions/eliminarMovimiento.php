@@ -1,11 +1,9 @@
 <?php
-include_once "../classes/BaseDatos.php";
+include_once "../classes/Presupuesto.php";
+
+$presupuesto = new Presupuesto();
 
 if (isset($_POST["id"])) {
-  $id = $_POST["id"];
-  var_dump($id); 
-  $bd = BaseDatos::getInstance();
-
-  $resultado = $bd->ejecutar("DELETE FROM movimientos WHERE id = ?", $id);
+  $presupuesto->eliminarMovimiento($_POST["id"]);
 }
 ?>

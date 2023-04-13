@@ -3,18 +3,12 @@ include_once "classes/BaseDatos.php";
 include_once "classes/Presupuesto.php";
 require_once 'classes/Weather.php';
 
+session_start(); // Inicia la sesión para recuperar el mensaje de error
+
 // Para llamadas a la API
 if (isset($_POST['movimientos'])) {
     header('Location: actions/api_movimientos.php?solicitud=' . $_POST['movimientos']);
 }
-
-// Para usar Weather
-$weather = new Weather();
-$city = 'Madrid';
-$current_weather = $weather->getCurrentWeather($city);
-
-
-session_start();
 
 $bd = BaseDatos::getInstance();
 $presupuesto = new Presupuesto();
@@ -35,6 +29,7 @@ $presupuesto = new Presupuesto();
 
     <link href="css/estilos.css" rel='stylesheet' />
     <script src="js/scripts.js" defer></script>
+    <script src="js/app.js" defer></script>
 
 </head>
 
@@ -42,14 +37,8 @@ $presupuesto = new Presupuesto();
 
     <!-- Weather -->
 
-    <div class="weather-container">
-        <?php if ($current_weather !== null): ?>
-            <h3>Tiempo en <?php echo $city; ?></h3>
-            <p>Temperatura: <?php echo $current_weather->current->temperature; ?>°C</p>
-            <p>Actualmente: <?php echo $current_weather->current->weather_descriptions[0]; ?></p>
-        <?php else: ?>
-            <p>Error al obtener información del clima.</p>
-        <?php endif; ?>
+    <div class="weather-container" id="weather-container">
+        <!-- El contenido se llenará con JavaScript -->
     </div>
 
     <!-- cabecera -->
