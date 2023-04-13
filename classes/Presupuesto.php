@@ -30,31 +30,53 @@ class Presupuesto
 
     public function getIngresos()
     {
-        return array_filter($this->movimientos, function ($movimiento) {
+        $ingresos = array_filter($this->movimientos, function ($movimiento) {
             return $movimiento->getTipo() === "ingreso";
         });
+
+        return array_map(function ($ingreso) {
+            return [
+                'id' => $ingreso->getId(),
+                'descripcion' => $ingreso->getDescripcion(),
+                'valor' => $ingreso->getValor()
+            ];
+        }, $ingresos);
     }
 
-    public function getGastos()
+    public function getGastos($totalIngresos) // totalIngresos requerido para calcular el porcentaje de cada uno
     {
-        return array_filter($this->movimientos, function ($movimiento) {
+        $gastos = array_filter($this->movimientos, function ($movimiento) {
             return $movimiento->getTipo() === "gasto";
         });
+
+        return array_map(function ($gasto) use ($totalIngresos) {
+            return [
+                'id' => $gasto->getId(),
+                'descripcion' => $gasto->getDescripcion(),
+                'valor' => $gasto->getValor(),
+                'porcentaje' => $gasto->getPorcentaje($totalIngresos)
+            ];
+        }, $gastos);
     }
+
+
 
     public function getTotalIngresos()
     {
-        return array_reduce($this->getIngresos(), function ($carry, $movimiento) {
-            return $carry + $movimiento->getValor();
+        $ingresosArray = $this->getIngresos();
+        return array_reduce($ingresosArray, function ($acumulador, $ingreso) {
+            return $acumulador + $ingreso['valor'];
         }, 0);
     }
 
     public function getTotalGastos()
     {
-        return array_reduce($this->getGastos(), function ($carry, $movimiento) {
-            return $carry + $movimiento->getValor();
+        $gastosArray = $this->getGastos($this->getTotalIngresos());
+        return array_reduce($gastosArray, function ($acumulador, $gasto) {
+            return $acumulador + $gasto['valor'];
         }, 0);
     }
+
 
     public function agregarMovimiento($tipo, $descripcion, $valor)
     {
@@ -84,7 +106,6 @@ class Presupuesto
             $resultado = $bd->sentencia("INSERT INTO movimientos (tipo, descripcion, valor) VALUES (?,?,?)", $tipo, $descripcion, $valor);
             $bd->cerrarBD();
             return true;
-
         } else {
             return false;
         }
@@ -103,6 +124,6 @@ class Presupuesto
 
     public function getPresupuestoRestante()
     {
-        return $this->getTotalIngresos() - $this->getTotalGastos();
+        return number_format($this->getTotalIngresos() - $this->getTotalGastos(), 2, '.', '');
     }
 }

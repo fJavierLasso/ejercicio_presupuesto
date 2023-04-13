@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Aplicación Presupuesto</title>
+
+    <link href="css/estilos.css" rel='stylesheet' />
+
+    <script defer src="js/addMovement.js"></script>
+    <script defer src="js/animations.js"></script>
+    <script defer src="js/deleteMovement.js"></script>
+    <script defer src="js/updateBudget.js"></script>
+    <script defer src="js/weather.js"></script>
+
+
+</head>
+
+<body>
+
+    <!-- Weather -->
+
+    <div class="weather-container" id="weather-container">
+        <!-- El contenido se llenará con JavaScript -->
+    </div>
+
+    <!-- cabecera -->
+    <div class="cabecero">
+        <div class="presupuesto">
+            <div class="presupuesto_titulo">
+                Presupuesto Disponible
+            </div>
+            <div class="presupuesto_valor" id='presupuesto'>€</div>
+            <div class="presupuesto_ingreso limpiarEstilos">
+                <div class="presupuesto_ingreso--texto">Ingresos</div>
+                <div class="derecha">
+                    <div class="presupuesto_ingreso--valor" id='ingresos'>€</div>
+                    <div class="presupuesto_ingreso--porcentaje">&nbsp;</div>
+                </div>
+            </div>
+            <div class="presupuesto_egreso limpiarEstilos">
+                <div class="presupuesto_egreso--texto">Gastos</div>
+                <div class="derecha limpiarEstilos">
+                    <div class="presupuesto_egreso--valor" id='egresos'>€</div>
+                    <div class="presupuesto_egreso--porcentaje" id='porcentaje'>%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- intro de datos -->
+
+    <form id='forma' method="POST" action="actions/agregarMovimiento.php">
+        <div class="agregar">
+            <div class="agregar_contenedor">
+                <div class="tipo-selector">
+                    <div class='tipo-option selected' data-tipo='ingreso'>+</div>
+                    <div class='tipo-option' data-tipo='gasto'>-</div>
+                    <input type="hidden" id="tipo" name="tipo" value="ingreso" />
+                </div>
+                <input type='text' class='agregar_descripcion' placeholder="Agregar Descripción" id='descripcion'
+                    name="descripcion" />
+                <input type='number' class='agregar_valor' placeholder="Valor" id='valor' step='any' name="valor" />
+                <button type="submit" class='agregar_btn'>
+                    <img class=" crear" src="imgs/checkmark.png" alt="">
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Mostrar el mensaje de error si existe -->
+    <div id="mensajeError"></div>
+
+    <div class="contenedor">
+        <div class="columna-ingresos">
+            <h2 class='ingreso_titulo'>Ingresos</h2>
+            <hr>
+            <div id="lista-ingresos"></div>
+        </div>
+        <div class="columna-gastos">
+            <h2 class='egreso_titulo'>Gastos</h2>
+            <hr>
+            <div id="lista-gastos"></div>
+        </div>
+    </div>
+</body>
+
+</html>
