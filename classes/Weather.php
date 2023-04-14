@@ -2,7 +2,7 @@
 
 class Weather {
     private $api_url = 'http://api.weatherstack.com/current';
-    private $api_key = '27a82a8801cfaddafd33babf92d9e37a';
+    private $api_key = '9746f7d3aa4c6cb228b47a3067a55887';
 
     public function getCurrentWeather($city) {
         $url = $this->api_url . '?access_key=' . $this->api_key . '&query=' . urlencode($city) . '&units=m';
