@@ -13,6 +13,15 @@ $(document).ready(function () {
                     $("#mensajeError").html(`<p class='error'>${data.error}</p>`);
                 } else {
                     updateBudget();
+
+                    // Vaciar los campos de descripción y valor
+                    $("#descripcion").val("");
+                    $("#valor").val("");
+
+                    // Opcional: restablecer el tipo de movimiento a ingreso
+                    $(".tipo-option").removeClass("selected");
+                    $(".tipo-option[data-tipo='ingreso']").addClass("selected");
+                    $("#tipo").val("ingreso");
                 }
             }
         });
