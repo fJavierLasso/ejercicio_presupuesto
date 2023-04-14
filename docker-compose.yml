@@ -12,6 +12,8 @@ services:
       - DB_NAME=primeraBase
       - DB_USER=fjavierlasso
       - DB_PASSWORD=1234
+    volumes: # Añade esta sección
+      - .:/var/www/html # Monta el directorio actual en /var/www/html dentro del contenedor
 
   db:
     image: mysql:8.0
@@ -21,7 +23,7 @@ services:
       MYSQL_DATABASE: primeraBase
       MYSQL_USER: fjavierlasso
       MYSQL_PASSWORD: 1234
-      MYSQL_ROOT_PASSWORD: root_password # Cambia esto por una contraseña segura para el usuario root
+      MYSQL_ROOT_PASSWORD: root_password 
     volumes:
       - db_data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
