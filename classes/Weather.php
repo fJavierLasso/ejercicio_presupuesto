@@ -15,7 +15,6 @@ class Weather {
             }
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
-            return null;
         }
 
         return $weather_data;

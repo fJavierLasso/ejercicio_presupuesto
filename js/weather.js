@@ -7,9 +7,10 @@ $(document).ready(function () {
         success: function (data) {
             // Procesa los datos aquí y genera el contenido HTML
             let weatherContent = `
-            <h3>${data.location.name}, ${data.location.country}</h3>
-            <p>${data.current.temperature} °C, ${data.current.weather_descriptions[0]}</p>
-          `;
+            
+            <p>${data.current.temperature} °C</p>
+          `; // , ${data.current.weather_descriptions[0]}</p> denegado por no estar especificado en el plan
+             // <h3>${data.location.name}, ${data.location.country}</h3> lo mismo
 
             // Inserta el contenido HTML en el elemento #weather-container
             $("#weather-container").html(weatherContent);

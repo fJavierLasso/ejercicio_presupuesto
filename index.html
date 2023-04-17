@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="presupuesto_egreso limpiarEstilos">
-                <div class="presupuesto_egreso--texto">Gastos</div>
+                <div class="presupuesto_egreso--texto">Egresos</div>
                 <div class="derecha limpiarEstilos">
                     <div class="presupuesto_egreso--valor" id='egresos'>€</div>
                     <div class="presupuesto_egreso--porcentaje" id='porcentaje'>%</div>
@@ -58,11 +58,10 @@
     <form id='forma' method="POST" action="actions/agregarMovimiento.php">
         <div class="agregar">
             <div class="agregar_contenedor">
-                <div class="tipo-selector">
-                    <div class='tipo-option selected' data-tipo='ingreso'>+</div>
-                    <div class='tipo-option' data-tipo='gasto'>-</div>
-                    <input type="hidden" id="tipo" name="tipo" value="ingreso" />
-                </div>
+                <select class="agregar_tipo" id="tipo" name="tipo">
+                    <option value="ingreso" selected>+</option>
+                    <option value="gasto">-</option>
+                </select>
                 <input type='text' class='agregar_descripcion' placeholder="Agregar Descripción" id='descripcion'
                     name="descripcion" />
                 <input type='number' class='agregar_valor' placeholder="Valor" id='valor' step='any' name="valor" />
@@ -83,7 +82,7 @@
             <div id="lista-ingresos"></div>
         </div>
         <div class="columna-gastos">
-            <h2 class='egreso_titulo'>Gastos</h2>
+            <h2 class='egreso_titulo'>Egresos</h2>
             <hr>
             <div id="lista-gastos"></div>
         </div>

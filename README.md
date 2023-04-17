@@ -1,5 +1,7 @@
 ### Setup con Docker
 
+es necesario tener instalados docker y docker-compose.
+
 Simplemente corre:
 
 ````

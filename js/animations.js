@@ -1,12 +1,3 @@
-// Animaciones del selector gasto/ingreso
-$(document).ready(function () {
-    $(".tipo-option").on("click", function () {
-      $(".tipo-option.selected").removeClass("selected");
-      $(this).addClass("selected");
-      $("#tipo").val($(this).data("tipo"));
-    });
-  });
-  
   // Animaciones del botón de enviar
   $(document).ready(function () {
     $(".agregar_btn").on("mousedown", function () {

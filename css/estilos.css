@@ -25,6 +25,10 @@ body {
     color: white;
 }
 
+.weather-container > p {
+    font-weight: bold;
+}
+
 /* Buttons */
 .agregar_btn {
     background: none;
@@ -196,9 +200,13 @@ body {
 }
 
 .agregar_tipo {
+    position: relative;
+    top: 1.5px;
+    height: 41.5px;
+    border-radius: 5px;
+    text-align: center;
     color: inherit;
     font-weight: 300;
-    height: 44px;
     font-size: 18px;
     margin-right: 10px;
     width: 55px;
@@ -213,6 +221,28 @@ body {
     margin-right: 10px;
     padding: 12px 15px;
 }
+
+@media screen and (max-width: 768px) {
+    .agregar_contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .agregar_tipo,
+    .agregar_descripcion,
+    .agregar_valor {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .agregar_btn {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+}
+
 
 /* Contenedor */
 .contenedor {
